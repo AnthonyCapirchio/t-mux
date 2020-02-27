@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"octopus-project.t-mux/tree"
+	"github.com/AnthonyCapirchio/t-mux/tree"
 )
 
 type Router struct {
