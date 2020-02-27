@@ -1,4 +1,4 @@
-module octopus-project.t-mux
+module github.com/AnthonyCapirchio/t-mux
 
 go 1.13
 
