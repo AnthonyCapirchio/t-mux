@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 )
 
 const PathDelimiter = "/"
@@ -15,7 +16,8 @@ type TreeNode struct {
 	Handler map[string]Handler
 	Childs  map[string]*TreeNode
 	VarName string
-	Parent  *TreeNode `json:"-"`
+	Parent  *TreeNode  `json:"-"`
+	mux     sync.Mutex `json:"-"`
 }
 
 type Handler func(w http.ResponseWriter, r *http.Request, params map[string]string)
@@ -35,6 +37,7 @@ func (t *TreeNode) AddNode(path string, method string, handler Handler) {
 
 	currentNode := t
 
+	t.mux.Lock()
 	for i := 0; i < len(splitted); i++ {
 		key := splitted[i]
 		varName := ""
@@ -65,6 +68,7 @@ func (t *TreeNode) AddNode(path string, method string, handler Handler) {
 			return
 		}
 	}
+	t.mux.Unlock()
 }
 
 func (t TreeNode) GetNode(path, method string) (Handler, map[string]string) {
