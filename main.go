@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"octopus-project.t-mux/router"
+	"github.com/AnthonyCapirchio/t-mux/router"
 )
 
 func a(w http.ResponseWriter, r *http.Request, params map[string]string) {
